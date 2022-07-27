@@ -31,8 +31,6 @@ export default class VideoPlayer extends Component {
     volume: 1,
     title: '',
     rate: 1,
-    showTimeRemaining: true,
-    showHours: false,
   };
 
   constructor(props) {
@@ -53,8 +51,7 @@ export default class VideoPlayer extends Component {
 
       isFullscreen:
         this.props.isFullScreen || this.props.resizeMode === 'cover' || false,
-      showTimeRemaining: this.props.showTimeRemaining,
-      showHours: this.props.showHours,
+      showTimeRemaining: true,
       volumeTrackWidth: 0,
       volumeFillWidth: 0,
       seekerFillWidth: 0,
@@ -565,22 +562,10 @@ export default class VideoPlayer extends Component {
     const symbol = this.state.showRemainingTime ? '-' : '';
     time = Math.min(Math.max(time, 0), this.state.duration);
 
-    if (!this.state.showHours) {
-      const formattedMinutes = padStart(Math.floor(time / 60).toFixed(0), 2, 0);
-      const formattedSeconds = padStart(Math.floor(time % 60).toFixed(0), 2, 0);
-
-      return `${symbol}${formattedMinutes}:${formattedSeconds}`;
-    }
-
-    const formattedHours = padStart(Math.floor(time / 3600).toFixed(0), 2, 0);
-    const formattedMinutes = padStart(
-      (Math.floor(time / 60) % 60).toFixed(0),
-      2,
-      0,
-    );
+    const formattedMinutes = padStart(Math.floor(time / 60).toFixed(0), 2, 0);
     const formattedSeconds = padStart(Math.floor(time % 60).toFixed(0), 2, 0);
 
-    return `${symbol}${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    return `${symbol}${formattedMinutes}:${formattedSeconds}`;
   }
 
   /**
@@ -1309,6 +1294,7 @@ const styles = {
       justifyContent: 'space-between',
       height: null,
       width: null,
+      backgroundColor: '#00000080'
     },
     vignette: {
       resizeMode: 'stretch',
@@ -1340,7 +1326,7 @@ const styles = {
     topControlGroup: {
       alignSelf: 'stretch',
       alignItems: 'center',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       flexDirection: 'row',
       width: null,
       margin: 12,
@@ -1389,19 +1375,19 @@ const styles = {
       alignItems: 'center',
       justifyContent: 'flex-start',
       flexDirection: 'row',
-      height: 1,
+      height: 2,
       marginLeft: 20,
       marginRight: 20,
       width: 150,
     },
     track: {
       backgroundColor: '#333',
-      height: 1,
+      height: 2,
       marginLeft: 7,
     },
     fill: {
       backgroundColor: '#FFF',
-      height: 1,
+      height: 2,
     },
     handle: {
       position: 'absolute',
@@ -1422,14 +1408,14 @@ const styles = {
     },
     track: {
       backgroundColor: '#333',
-      height: 1,
+      height: 2,
       position: 'relative',
       top: 14,
       width: '100%',
     },
     fill: {
       backgroundColor: '#FFF',
-      height: 1,
+      height: 2,
       width: '100%',
     },
     handle: {
